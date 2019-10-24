@@ -1,0 +1,1 @@
+bot: python train_chat_bot.py $PORT
