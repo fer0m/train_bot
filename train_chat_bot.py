@@ -71,17 +71,6 @@ def station_parse(station_1, station_2):
     return go_train
 
 
-# Код для работы бота
-@bot.message_handler(content_types=['text'])
-def get_text_messages(message):
-    if message.text == "Поехали" or "Го":
-        start_find(message)
-    elif message.text == "/help":
-        bot.send_message(message.from_user.id, "Напиши привет")
-    else:
-        bot.send_message(message.from_user.id, "Я тебя не понимаю. Напиши /help.")
-
-
 @bot.message_handler(content_types=['text'])
 def start_find(message):
     keyboard = telebot.types.InlineKeyboardMarkup()
@@ -93,6 +82,15 @@ def start_find(message):
 
     bot.send_message(message.chat.id, 'Выбери, куда поедешь', reply_markup=keyboard)
 
+# Код для работы бота
+@bot.message_handler(content_types=['text'])
+def get_text_messages(message):
+    if message.text == "Поехали" or "Го":
+        start_find(message)
+    elif message.text == "/help":
+        bot.send_message(message.from_user.id, "Напиши привет")
+    else:
+        bot.send_message(message.from_user.id, "Я тебя не понимаю. Напиши /help.")
 
 @bot.callback_query_handler(func=lambda call: True)
 def iq_callback(message):
