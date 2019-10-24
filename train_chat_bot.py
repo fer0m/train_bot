@@ -71,26 +71,26 @@ def station_parse(station_1, station_2):
     return go_train
 
 
-@bot.message_handler(content_types=['text'])
-def start_find(message):
-    keyboard = telebot.types.InlineKeyboardMarkup()
 
-    keyboard.row(
-        telebot.types.InlineKeyboardButton('Едем в Пушкино', callback_data='Пушкино'),
-        telebot.types.InlineKeyboardButton('Едем в Москву', callback_data="Москва")
-                )
-
-    bot.send_message(message.chat.id, 'Выбери, куда поедешь', reply_markup=keyboard)
 
 # Код для работы бота
 @bot.message_handler(content_types=['text'])
 def get_text_messages(message):
-    if message.text == "Поехали" or "Го":
-        start_find(message)
-    elif message.text == "/help":
-        bot.send_message(message.from_user.id, "Напиши привет")
+    if message.text == "/help":
+        bot.send_message(message.from_user.id, "Привет! Все очень просто, бот выдаст тебе ближайшие 5 электричек в том направлении, куда тебе захочется. Если вдруг бот не работает, то это чистая случайность :) Для рывка, просто тыкни сюда /start")
+    elif message.text == "/start":
+       start_find(message)
     else:
-        bot.send_message(message.from_user.id, "Я тебя не понимаю. Напиши /help.")
+        bot.send_message(message.from_user.id, "Возможно опечатка? Тут функций-то всего две! Ты хотел начать /start ? Инфа тут /help")
+
+@bot.message_handler()
+def start_find(message):
+    keyboard = telebot.types.InlineKeyboardMarkup()
+    keyboard.row(
+        telebot.types.InlineKeyboardButton('Едем в Пушкино', callback_data='Пушкино'),
+        telebot.types.InlineKeyboardButton('Едем в Москву', callback_data="Москва")
+                )
+    bot.send_message(message.chat.id, 'Выбери, куда поедешь', reply_markup=keyboard)
 
 @bot.callback_query_handler(func=lambda call: True)
 def iq_callback(message):
