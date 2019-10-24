@@ -1,17 +1,19 @@
+import pytz
 import telebot
 from telebot import types
 import requests
 import json
 import time
 import datetime
+import pytz
 from flask import Flask
 import os
 
 server = Flask(__name__)
 
 # Глобальные переменные времени
-time_now = str(datetime.datetime.now())[11:16]
-date_now = str(datetime.datetime.now())[0:10]
+time_now = str(datetime.datetime.now(tz=pytz.UTC))[11:16]
+date_now = str(datetime.datetime.now(tz=pytz.UTC))[0:10]
 
 # Информация по боту
 TOKEN = '949040094:AAFo6nbxJsUfXLaHxFgwRQ8gfZSqSIIYd8k'
@@ -84,6 +86,8 @@ def get_text_messages(message):
         bot.send_message(message.from_user.id, "Привет! Все очень просто, бот выдаст тебе ближайшие 5 электричек в том направлении, куда тебе захочется. Если вдруг бот не работает, то это чистая случайность :) Для рывка, просто тыкни сюда /start")
     elif message.text == "/start":
        start_find(message)
+    elif message.text == '/time':
+        bot.send_message(message.from_user.id, time_now)
     else:
         bot.send_message(message.from_user.id, "Возможно опечатка? Тут функций-то всего две! Ты хотел начать /start ? Инфа тут /help")
 
