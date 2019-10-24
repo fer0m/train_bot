@@ -13,8 +13,6 @@ server = Flask(__name__)
 
 # Глобальные переменные времени
 tz = pytz.timezone('Europe/Moscow')
-time_now = str(datetime.datetime.now(tz))[11:16]
-date_now = str(datetime.datetime.now(tz))[0:10]
 
 # Информация по боту
 TOKEN = '949040094:AAFo6nbxJsUfXLaHxFgwRQ8gfZSqSIIYd8k'
@@ -35,7 +33,7 @@ def info_train(station_1, station_2):
                             'page=1&'
                             'date={date_now}&'
                             'offset=1&'
-                            'limit=10000'.format(station_1=station_1, station_2=station_2, date_now=date_now))
+                            'limit=10000'.format(station_1=station_1, station_2=station_2, date_now=str(datetime.datetime.now(tz))[0:10]))
 
     response.encoding = 'utf-8'
     global page_1
@@ -64,7 +62,7 @@ def station_parse(station_1, station_2):
     info_train(station_1, station_2)
     list = []
     for i in range(page_1['pagination']['total'] - 1):
-        if page_1['segments'][i]['departure'][11:16] > time_now:
+        if page_1['segments'][i]['departure'][11:16] > str(datetime.datetime.now(tz))[11:16]:
             list.append(((' ' + page_1["segments"][i]['thread']['title'] + ". Отправлением в : " +
                           (page_1['segments'][i]['departure'][11:16]) +
                           ". Прибытием в : "
@@ -88,7 +86,7 @@ def get_text_messages(message):
     elif message.text == "/start":
        start_find(message)
     elif message.text == '/time':
-        bot.send_message(message.from_user.id, time_now)
+        bot.send_message(message.from_user.id, str(datetime.datetime.now(tz))[11:16])
     else:
         bot.send_message(message.from_user.id, "Возможно опечатка? Тут функций-то всего две! Ты хотел начать /start ? Инфа тут /help")
 
