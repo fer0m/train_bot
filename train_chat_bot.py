@@ -14,7 +14,8 @@ time_now = str(datetime.datetime.now())[11:16]
 date_now = str(datetime.datetime.now())[0:10]
 
 # Информация по боту
-bot = telebot.TeleBot('949040094:AAFo6nbxJsUfXLaHxFgwRQ8gfZSqSIIYd8k')
+TOKEN = '949040094:AAFo6nbxJsUfXLaHxFgwRQ8gfZSqSIIYd8k'
+bot = telebot.TeleBot(TOKEN)
 
 # Код для парса электричек
 
@@ -111,6 +112,12 @@ try:
     bot.polling(none_stop=True, interval=0)
 except Exception:
     pass
+
+@server.route("/")
+def webhook():
+    bot.remove_webhook()
+    bot.set_webhook(url='https://https://salty-fjord-17491.herokuapp.com//' + TOKEN)
+    return "!", 200
 
 if __name__ == '__main__':
     server.run(host='0.0.0.0', port=int(os.environ.get('PORT',5000)))
