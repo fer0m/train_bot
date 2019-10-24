@@ -4,7 +4,10 @@ import requests
 import json
 import time
 import datetime
+from flask import Flask
+import os
 
+server = Flask(__name__)
 
 # Глобальные переменные времени
 time_now = str(datetime.datetime.now())[11:16]
@@ -108,5 +111,8 @@ try:
     bot.polling(none_stop=True, interval=0)
 except Exception:
     pass
+
+if __name__ == '__main__':
+    server.run(host='0.0.0.0', port=int(os.environ.get('PORT',5000)))
 
 """https://www.mindk.com/blog/how-to-develop-a-chat-bot/"""
