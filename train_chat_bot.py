@@ -5,6 +5,7 @@ import json
 import time
 import datetime
 
+
 # Глобальные переменные времени
 time_now = str(datetime.datetime.now())[11:16]
 date_now = str(datetime.datetime.now())[0:10]
@@ -105,7 +106,9 @@ def iq_callback(message):
         station_2 = "s2000002"
         bot.send_message(message.from_user.id, station_parse(station_1, station_2))
 
-
-bot.polling(none_stop=True, interval=0)
+try:
+    bot.polling(none_stop=True, interval=0)
+except Exception:
+    pass
 
 """https://www.mindk.com/blog/how-to-develop-a-chat-bot/"""
