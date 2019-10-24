@@ -12,8 +12,9 @@ import os
 server = Flask(__name__)
 
 # Глобальные переменные времени
-time_now = str(datetime.datetime.now(tz=pytz.UTC))[11:16]
-date_now = str(datetime.datetime.now(tz=pytz.UTC))[0:10]
+tz = pytz.timezone('Europe/Moscow')
+time_now = str(datetime.datetime.now(tz))[11:16]
+date_now = str(datetime.datetime.now(tz))[0:10]
 
 # Информация по боту
 TOKEN = '949040094:AAFo6nbxJsUfXLaHxFgwRQ8gfZSqSIIYd8k'
